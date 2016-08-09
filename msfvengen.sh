@@ -21,9 +21,9 @@ echo "LPORT?"
 read -p "> " lprt
 echo "We will be using the windows/meterpreter/reverse_X payloads. Which would you like to use?"
 read -p "> windows/meterpreter/reverse_" listenr
-echo "How many cycles we encode our shellcode?"
+echo "How many cycles we encode our shellcode? (1-20)"
 read -p "> " enumber
-echo "Number of random seed to add some junk to the resulting C code source file:"
+echo "Number of random seed to add some junk to the resulting C code source file (1-10000):"
 read -p "> " seed
 
 echo
