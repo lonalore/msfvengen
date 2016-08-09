@@ -8,21 +8,69 @@ MSFVenGen - Custom MSFVenom Executable Generator
 - Wine + MinGW
 - Metasploit Framework
 
+### Installing
+
+##### Install Wine
+
+Wine allows windows applications to be run on several platforms such as Linux, Mac OS X and more.
+
+To install Wine just run this command:
+
+    sudo apt-get install wine
+
+##### Install MinGW
+
+MinGW is a collection of windows development tools including compilers such as GCC and G++. Using both MiniGW and Wine it is possible to compile windows code thus creating a portable executable (pe) which can be later run on a victim's machine.
+
+- Go to [SourceForge](http://sourceforge.net/projects/mingw/files/Installer/mingw-get-setup.exe/download) to download the installer.
+- In a terminal use `wine /path/to/file/mingw-get-setup.exe`
+- Select "Run with GUI" option
+
+Note that you must have the GUI up in order to get the installer to run properly. You can run it in a terminal however it draws a GUI box for installation.
+
+- When the window appears, make sure to select mingw32-base. This is required to continue and make things work properly. Select Installation and click Update Catalogue.
+- You want to get the right DLLs to be able to compile properly. You can find them here: [Go Jhonny!](http://gojhonny.com/misc/mingw_bin.zip)
+- Unzip them into your Windows directory in wine. Its location should be `/home/USERNAME/.wine/drive_c/windows`
+
+Great! Now you can use gcc.exe!
+
+Syntax:
+
+    cd /home/USERNAME/.wine/drive_c/MinGW/bin
+    wine gcc.exe -o file.exe sourcefile.c
+
+##### Metasploit Framework
+
+The Metasploit Project is a computer security project that provides information about security vulnerabilities and aids in penetration testing and IDS signature development.
+
+Its best-known sub-project is the open source Metasploit Framework, a tool for developing and executing exploit code against a remote target machine. Other important sub-projects include the Opcode Database, shellcode archive and related research.
+
+The Metasploit Project is well known for its anti-forensic and evasion tools, some of which are built into the Metasploit Framework.
+
+To install Metasploit Framework just run this command:
+
+    curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall
+
 ### Usage
 
     ./msfvengen.sh
 
 ### Example output
     MSFVenGen - Custom MSFVenom Executable Generator
-    > LHOST: 192.168.0.102
-    > LPORT: 4444
+    
+    LHOST?
+    > 192.168.0.102
+    LPORT?
+    > 4444
     We will be using the windows/meterpreter/reverse_X payloads. Which would you like to use?
     > windows/meterpreter/reverse_tcp
-    > How many cycles we encode our shellcode? 1
-    > Number of random seed to add some junk to the resulting C code source file: 1
+    How many cycles we encode our shellcode?
+    > 1
+    Number of random seed to add some junk to the resulting C code source file:
+    > 1
     
-    Cleaning out the ShellCode directory
-    Generating shellcode...
+    Attempting to clean the ShellCode directory out...
+    Attempting to generate shell-code...
     Attempting to read payload from STDIN...
     Attempting to read payload from STDIN...
     Attempting to read payload from STDIN...
